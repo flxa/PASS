@@ -6,9 +6,9 @@ class Config {
 	var $debug = '0';
 	var $componentpath = 'components';
 	var $ds = '/';
-	var $dbpass = "qw17b17ch3n";
-	var $dbname = "printnat_repcal";
-	var $dbuser = "printnat_dbuser";
+	var $dbpass = "your_password";
+	var $dbname = "your_database";
+	var $dbuser = "your_user";
 	var $sessionTimeout = 59; // in minutes
 }
 

@@ -1,0 +1,277 @@
+.topbar .icon{
+	margin:0;
+	padding:4px;
+}
+.topbar a.icon img{
+	opacity:.65;
+}
+.topbar a.icon img:hover{
+	opacity:1;
+}
+.topbar ul li ul li span{
+	display:inline-block;
+	vertical-align: middle;
+	height:18px;
+}
+.topbar ul li ul li img{
+	vertical-align: middle;
+}
+footer{
+	text-align:center;
+}
+footer span{
+	color:#999;
+	/*outline:1px solid #f00;*/
+}
+footer .layout-icon{
+	margin:0 auto;
+	width:28px;
+	height:28px;
+	outline:0px solid #f00;
+}
+table{ 
+	background:#fff;
+}
+input.danger{
+	background:#f99;
+	color:#000;
+}
+.w10{width:10px;}
+.w20{width:20px;}
+.w30{width:30px;}
+.w40{width:40px;}
+.w50{width:50px;}
+.w60{width:60px;}
+.w70{width:70px;}
+.w80{width:80px;}
+.w90{width:90px;}
+.w100{width:100px;}
+.w110{width:110px;}
+.w120{width:120px;}
+.w130{width:130px;}
+.w140{width:140px;}
+.w150{width:150px;}
+.w160{width:160px;}
+
+.toolbar .btn{
+	margin-right:10px;
+	margin-bottom:5px;
+}
+/* Images in the table headings */
+.tbl-heading{
+	background:#666;
+	color:#fff;
+}
+.tbl-heading img{
+	vertical-align: middle;
+}
+.tbl-heading span{
+	display:blocl;
+	vertical-align: middle;
+}
+
+/* right align heading buttons */
+.tbl-heading .btn {
+	float:right;
+	margin-left:10px;
+}
+
+.a-l{ text-align:left;vertical-align:top; }
+.a-c{ text-align:center;vertical-align:top; }
+.a-r{ text-align:right;vertical-align:top; }
+
+.pagination{
+	outline:0px solid #f00;
+	margin:0 auto;
+	text-align:center;
+	padding:0;
+}
+.pagination ul{
+	margin:0 auto;
+	padding:0;
+}
+.pagination .total_page{
+	float:left;
+	outline:0px solid #f00;
+	padding:10px 10px 0 8px;
+}
+/* images in buttons */
+a.icon img {
+	vertical-align: middle;
+}
+a.icon span{
+	vertical-align: middle;
+}
+
+/* Tiny buttons with images */
+.tiny{
+	padding:2px;
+}
+
+/* input number value for range input */
+.range-value {width:100px;display:inline-block;background:transparent;color:#000;outline:0px solid #f00;vertical-align:middle;height:100%;margin-left:20px; }
+
+.browser-details{
+	position:relative;
+	top:20px;
+	width:200px;
+	margin:0 auto;
+	background:#000;
+	color:#0f0;
+	padding:10px;
+	border:0px solid #484848;
+	font-family:Courier;
+	border-radius:5px;
+	box-shadow:2px 2px 10px #000;
+	text-align:left;
+}
+.browser-details-top{
+	position:relative;
+	top:-30px;
+	margin:0 auto;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 20px 20px 20px;
+	border-color: transparent transparent #000000 transparent;
+	line-height: 0px;
+	_border-color: #ffffff #ffffff #000000 #ffffff;
+	_filter: progid:DXImageTransform.Microsoft.Chroma(color='#ffffff');
+}
+/* Date Picker jQuery Plugin styles */
+.datepicker {
+  background-color: #ffffff;
+  border-color: #999;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+  display: none;
+  position: absolute;
+  z-index: 900;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 18px;
+  padding-bottom: 4px;
+  width: 218px;
+}
+.datepicker .nav {
+  font-weight: bold;
+  width: 100%;
+  padding: 4px 0;
+  background-color: #f5f5f5;
+  color: #808080;
+  border-bottom: 1px solid #ddd;
+  -webkit-box-shadow: inset 0 1px 0 #ffffff;
+  -moz-box-shadow: inset 0 1px 0 #ffffff;
+  box-shadow: inset 0 1px 0 #ffffff;
+  zoom: 1;
+}
+.datepicker .nav:before, .datepicker .nav:after {
+  display: table;
+  content: "";
+  zoom: 1;
+  *display: inline;
+}
+.datepicker .nav:after {
+  clear: both;
+}
+.datepicker .nav span {
+  display: block;
+  float: left;
+  text-align: center;
+  height: 28px;
+  line-height: 28px;
+  position: relative;
+}
+.datepicker .nav .bg {
+  width: 100%;
+  background-color: #fdf5d9;
+  height: 28px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker .nav .fg {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.datepicker .button {
+  cursor: pointer;
+  padding: 0 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker .button:hover {
+  background-color: #808080;
+  color: #ffffff;
+}
+.datepicker .months {
+  float: left;
+  margin-left: 4px;
+}
+.datepicker .months .name {
+  width: 72px;
+  padding: 0;
+}
+.datepicker .years {
+  float: right;
+  margin-right: 4px;
+}
+.datepicker .years .name {
+  width: 36px;
+  padding: 0;
+}
+.datepicker .dow, .datepicker .days div {
+  float: left;
+  width: 30px;
+  line-height: 25px;
+  text-align: center;
+}
+.datepicker .dow {
+  font-weight: bold;
+  color: #808080;
+}
+.datepicker .calendar {
+  padding: 4px;
+}
+.datepicker .days div {
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker .days div:hover {
+  background-color: #0064cd;
+  color: #ffffff;
+}
+.datepicker .overlap {
+  color: #bfbfbf;
+}
+.datepicker .today {
+  background-color: #fee9cc;
+}
+.datepicker .selected {
+  background-color: #bfbfbf;
+  color: #ffffff;
+}
+.spinner{
+  background: transparent url('../img/template/spinner.gif') 0 0 no-repeat;
+  display: inline-block;
+  height:16px;
+  width:16px;
+}

@@ -315,42 +315,9 @@ class CompanyModelCompany extends Component {
 		return $companyname;
 	}
 
-	function get_notes($id=NULL,$NoteID=NULL,$limit=NULL) {
-		$starttime = microtime();
-		$query 	= "SELECT Opp_ID,Opp_Name,opportunities.Opp_StageID,opportunities_stages.Opp_StageName,Opp_Amount,Opp_StartDate,Opp_CloseDate,Opp_Active
-			,Opp_CompanyID 
-			FROM opportunities ";
-		$querywhere .= "LEFT JOIN opportunities_stages ON opportunities_stages.Opp_StageID=opportunities.Opp_StageID 
-			WHERE Opp_Active!=0 ";
-		if ($id!='') {
-			$querywhere .= " AND Opp_CompanyID='".$id."'";
-		}
-		if ($OppID!=NULL) {
-			$querywhere .= " AND Opp_ID='".$OppID."'";
-		}
-		//$queryorder .= " ORDER BY Opp_CloseDate ASC";
-		if ($limit!=NULL) {
-			$querylimit .= " LIMIT $limit";
-		} else {
-			$querylimit .= " LIMIT 0,5";
-		}
-		$result = mysql_query($query.$querywhere.$queryorder.$querylimit);
-		//echo $query.$querywhere.$queryorder.$querylimit; exit;
-		$endtime = microtime();
-		$db = new stdClass;
-		if (mysql_error()) { $db->sql_error = mysql_error(); echo mysql_error(); exit; }
-		$db->query = $query;
-		$db->result = $result;
-		$db->numrows = mysql_num_rows($result);
-		$query = "SELECT COUNT(*) FROM opportunities ".$querywhere;
-		$resulttotal = mysql_query($query);
-		$db->totalrows = mysql_result($resulttotal,0);
-		$db->Opp_LimitStart = "5";
-		$db->timetaken = $endtime-$starttime;
-		$db->updated = 0;
-		$datalist = $db;
-		return $datalist;
-	}
+	/*********************************/
+	/**** Oportunities Functions *****/
+	/*********************************/
 
 	function get_opportunities($id=NULL,$OppID=NULL,$limit=NULL) {
 		$starttime = microtime();
@@ -365,7 +332,7 @@ class CompanyModelCompany extends Component {
 		if ($OppID!=NULL) {
 			$querywhere .= " AND Opp_ID='".$OppID."'";
 		}
-		//$queryorder .= " ORDER BY Opp_CloseDate ASC";
+		$queryorder .= " ORDER BY Opp_CloseDate ASC";
 		if ($limit!=NULL) {
 			$querylimit .= " LIMIT $limit";
 		} else {
@@ -454,6 +421,193 @@ class CompanyModelCompany extends Component {
 		$starttime = microtime();
 		$query 	= "SELECT Opp_StageID,Opp_StageName FROM opportunities_stages WHERE Opp_StageActive!=0 ";
 		$query .= "ORDER BY Opp_StageName";
+		$result = mysql_query($query);
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); }
+		$db->query = $query;
+		$db->result = $result;
+		$db->numrows = mysql_num_rows($result);
+		$db->timetaken = $endtime-$starttime;
+		$db->updated = 0;
+		$datalist = $db;
+		return $datalist;
+	}
+
+	/*********************************/
+	/******* Notes Functions *********/
+	/*********************************/
+
+	function get_notes($NoteID=NULL,$RepID=NULL,$CompanyID=NULL,$limit=NULL) {
+		$starttime = microtime();
+		$query 	= "SELECT notes.Note_ID, notes.Note_CompanyID, notes.Note_RepID, notes.Note_Subject, notes.Note_Body, notes.Note_TypeID, notes.Note_AddedBy, notes.Note_CreatedDate, notes.Note_AssignedRepID, notes.Note_NextActionID, notes.Note_DueDate, notes.Note_ReminderDate, notes.Note_StatusID, notes.Note_Recursive, notes.Note_RecursiveInterval, notes.Note_RecursiveDateTime, notes.Note_Active, note_actions.Note_ActionName, note_statuses.Note_StatusName, note_types.Note_TypeName, users.Rep_FirstName, users.Rep_LastName, company.Company_Name
+			FROM notes ";
+		$querywhere .= "LEFT JOIN note_actions ON note_actions.Note_ActionID=notes.Note_NextActionID 
+			LEFT JOIN note_statuses ON note_statuses.Note_StatusID=notes.Note_StatusID 
+			LEFT JOIN note_types ON note_types.Note_TypeID=notes.Note_TypeID 
+			LEFT JOIN users ON users.Rep_ID=notes.Note_RepID 
+			LEFT JOIN company ON company.Company_ID=notes.Note_CompanyID 
+			WHERE notes.Note_Active!=0 ";
+		if ($NoteID!='') {
+			$querywhere .= " AND notes.Note_ID='".$NoteID."'";
+		}
+		if ($RepID!=NULL) {
+			$querywhere .= " AND notes.Note_RepID='".$RepID."'";
+		}
+		if ($CompanyID!=NULL) {
+			$querywhere .= " AND notes.Note_CompanyID='".$CompanyID."'";
+		}
+		$queryorder .= " ORDER BY notes.Note_CreatedDate ASC";
+		if ($limit!=NULL) {
+			$querylimit .= " LIMIT $limit";
+		} else {
+			$querylimit .= " LIMIT 0,5";
+		}
+		$result = mysql_query($query.$querywhere.$queryorder.$querylimit);
+		//echo $query.$querywhere.$queryorder.$querylimit; exit;
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); echo mysql_error(); exit; }
+		$db->query = $query;
+		$db->result = $result;
+		$db->numrows = mysql_num_rows($result);
+		$query = "SELECT COUNT(*) FROM notes ".$querywhere;
+		$resulttotal = mysql_query($query);
+		$db->totalrows = mysql_result($resulttotal,0);
+		$db->Note_LimitStart = "5";
+		$db->timetaken = $endtime-$starttime;
+		$db->updated = 0;
+		$datalist = $db;
+		return $datalist;
+	}
+
+	function save_note($data) {
+		$starttime = microtime();
+		$query 	= "INSERT INTO notes (
+				Note_ID
+				,Note_CompanyID
+				,Note_RepID
+				,Note_Subject
+				,Note_Body
+				,Note_TypeID
+				,Note_AddedBy
+				,Note_CreatedDate
+				,Note_AssignedRepID
+				,Note_NextActionID
+				,Note_DueDate
+				,Note_ReminderDate
+				,Note_StatusID
+				,Note_Recursive
+				,Note_RecursiveInterval
+				,Note_RecursiveDateTime
+				,Note_Active
+			) VALUES (
+				NULL
+				,'$data->Note_CompanyID'
+				,'$data->Note_RepID'
+				,'$data->Note_Subject'
+				,'$data->Note_Body'
+				,'$data->Note_TypeID'
+				,'$data->Note_AddedBy'
+				,now()
+				,'$data->Note_AssignedRepID'
+				,'$data->Note_NextActionID'
+				,'$data->Note_DueDate'
+				,'$data->Note_ReminderDate'
+				,'$data->Note_StatusID'
+				,'$data->Note_Recursive'
+				,'$data->Note_RecursiveInterval'
+				,'$data->Note_RecursiveDateTime'
+				,'$data->Note_Active'
+			)";
+		$result = mysql_query($query);
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); echo $db->sql_error.'<hr />'.$query; exit; }
+		$db->query = $query;
+		$db->result = $result;
+		$db->updated = mysql_affected_rows();
+		$db->timetaken = $endtime-$starttime;
+		$data->Opp_ID = mysql_insert_id();
+		$db->result = $this->_loadData($data);
+		$data->db = $db;
+		//echo '<pre>'; echo print_r($data); exit;
+		//$this->log($_SESSION['pass']['user']->Rep_ID,$data->Company_Name,$data->Company_ID,$data,$db);
+		return $data;
+	}
+	
+	function edit_note($data) {
+		$starttime = microtime();
+		$query 	= "UPDATE notes SET 
+			Note_CompanyID='".$data->Note_CompanyID."'
+			,Note_RepID='".$data->Note_RepID."'
+			,Note_Subject='".$data->Note_Subject."'
+			,Note_Body='".$data->Note_Body."'
+			,Note_TypeID='".$data->Note_TypeID."'
+			,Note_AddedBy='".$data->Note_AddedBy."'
+			,Note_CreatedDate='".$data->Note_CreatedDate."'
+			,Note_AssignedRepID='".$data->Note_AssignedRepID."'
+			,Note_NextActionID='".$data->Note_NextActionID."'
+			,Note_DueDate='".$data->Note_DueDate."'
+			,Note_ReminderDate='".$data->Note_ReminderDate."'
+			,Note_StatusID='".$data->Note_StatusID."'
+			,Note_Recursive='".$data->Note_Recursive."'
+			,Note_RecursiveInterval='".$data->Note_RecursiveInterval."'
+			,Note_RecursiveDateTime='".$data->Note_RecursiveDateTime."'
+			,Note_Active='".$data->Note_Active."'
+			"; 
+		$query .= "WHERE Note_ID=$data->Note_ID";
+		$result = mysql_query($query);
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); }
+		$db->query = $query;
+		$db->result = $result;
+		$db->updated = mysql_affected_rows();
+		$db->timetaken = $endtime-$starttime;
+		$data->db = $db;
+		//$this->log($_SESSION['pass']['user']->Rep_ID,$data->Company_Name,$data->Company_ID,$data,$db);
+		return $data;
+	}
+
+	function get_note_actions_list() {
+		$starttime = microtime();
+		$query 	= "SELECT Note_ActionID,Note_ActionName FROM note_actions WHERE Note_ActionActive!=0 ";
+		$query .= "ORDER BY Note_ActionName";
+		$result = mysql_query($query);
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); }
+		$db->query = $query;
+		$db->result = $result;
+		$db->numrows = mysql_num_rows($result);
+		$db->timetaken = $endtime-$starttime;
+		$db->updated = 0;
+		$datalist = $db;
+		return $datalist;
+	}
+
+	function get_note_statuses_list() {
+		$starttime = microtime();
+		$query 	= "SELECT Note_StatusID,Note_StatusName FROM note_statuses WHERE Note_StatusActive!=0 ";
+		$query .= "ORDER BY Note_StatusName";
+		$result = mysql_query($query);
+		$endtime = microtime();
+		$db = new stdClass;
+		if (mysql_error()) { $db->sql_error = mysql_error(); }
+		$db->query = $query;
+		$db->result = $result;
+		$db->numrows = mysql_num_rows($result);
+		$db->timetaken = $endtime-$starttime;
+		$db->updated = 0;
+		$datalist = $db;
+		return $datalist;
+	}
+
+	function get_note_types_list() {
+		$starttime = microtime();
+		$query 	= "SELECT Note_TypeID,Note_TypeName FROM note_types WHERE Note_TypeActive!=0 ";
+		$query .= "ORDER BY Note_TypeName";
 		$result = mysql_query($query);
 		$endtime = microtime();
 		$db = new stdClass;

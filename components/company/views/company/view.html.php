@@ -26,6 +26,14 @@ class CompanyViewCompany {
 			case 'doeditopp':
 				$html = $this->opp($data,$model,'opp');
 				break;
+			case 'addnote':
+			case 'doaddnote':
+				$html = $this->note($data,$model,'note');
+				break;
+			case 'editnote':
+			case 'doeditnote':
+				$html = $this->note($data,$model,'note');
+				break;
 		}
 		return $html;
 	}
@@ -56,6 +64,12 @@ class CompanyViewCompany {
 	}
 
 	function opp($data,$model,$tpl) {
+		//include($data->path.'views/company/tmpl/toolbar.php');
+		include($data->path.'views/company/tmpl/'.$tpl.'.php');
+		return $html;
+	}
+
+	function note($data,$model,$tpl) {
 		//include($data->path.'views/company/tmpl/toolbar.php');
 		include($data->path.'views/company/tmpl/'.$tpl.'.php');
 		return $html;
@@ -125,6 +139,10 @@ class CompanyViewCompany {
 		return $html;
 	}
 
+	/*********************************/
+	/**** Oportunities Functions *****/
+	/*********************************/
+
 	function opp_stage_list($model,$id){
 		$datalist = $model->get_stage_list();
 		$html = '<select name="Opp_StageID" id="OS">';
@@ -137,6 +155,71 @@ class CompanyViewCompany {
 				if ($row->Opp_StageID==$id) { $html .= ' selected'; }
 			} 
 			$html .= '>'.$row->Opp_StageName.'</option>';
+		}
+		$html .= '</select>';
+		return $html;
+	}
+
+	/*********************************/
+	/******* Notes Functions *********/
+	/*********************************/
+
+	function note_actions_list($model,$id){
+		$datalist = $model->get_note_actions_list();
+		$html = '<select name="Note_NextActionID" id="NNA">';
+		$html .= '<option value="NULL"'; if (!isset($id) || $id==NULL) { $html .= ' selected'; } $html .= '>Select</option>';
+		while($row = mysql_fetch_object($datalist->result)) {
+			$html .= '<option value="'.$row->Note_ActionID.'"'; 
+			if ($_REQUEST['task']=='addnote') {
+				if ($row->Note_ActionID==1) { $html .= ' selected'; }
+			} else {
+				if ($row->Note_ActionID==$id) { $html .= ' selected'; }
+			} 
+			$html .= '>'.$row->Note_ActionName.'</option>';
+		}
+		$html .= '</select>';
+		return $html;
+	}
+
+	function note_status_list($model,$id){
+		$datalist = $model->get_note_statuses_list();
+		$html = '<select name="Note_StatusID" id="NS">';
+		$html .= '<option value="NULL"'; if (!isset($id) || $id==NULL) { $html .= ' selected'; } $html .= '>Select</option>';
+		while($row = mysql_fetch_object($datalist->result)) {
+			$html .= '<option value="'.$row->Note_StatusID.'"'; 
+			if ($_REQUEST['task']=='addnote') {
+				if ($row->Note_StatusID==1) { $html .= ' selected'; }
+			} else {
+				if ($row->Note_StatusID==$id) { $html .= ' selected'; }
+			} 
+			$html .= '>'.$row->Note_StatusName.'</option>';
+		}
+		$html .= '</select>';
+		return $html;
+	}
+
+	function note_types_list($model,$id){
+		$datalist = $model->get_note_types_list();
+		$html = '<select name="Note_TypeID" id="NT">';
+		$html .= '<option value="NULL"'; if (!isset($id) || $id==NULL) { $html .= ' selected'; } $html .= '>Select</option>';
+		while($row = mysql_fetch_object($datalist->result)) {
+			$html .= '<option value="'.$row->Note_TypeID.'"'; 
+			if ($_REQUEST['task']=='addnote') {
+				if ($row->Note_TypeID==1) { $html .= ' selected'; }
+			} else {
+				if ($row->Note_TypeID==$id) { $html .= ' selected'; }
+			} 
+			$html .= '>'.$row->Note_TypeName.'</option>';
+		}
+		$html .= '</select>';
+		return $html;
+	}
+
+	function note_AssigndRepID_list($model,$id=NULL){
+		$datalist = $model->get_reps();
+		$html = '<select name="Company_AssignedRep" id="CAR">';
+		while($row = mysql_fetch_object($datalist->result)) {
+			$html .= '<option value="'.$row->Rep_ID.'"'; if ($row->Rep_ID==$id) { $html .= ' selected'; } $html .= '>'.$row->Rep_FirstName.' '.$row->Rep_LastName.'</option>';
 		}
 		$html .= '</select>';
 		return $html;

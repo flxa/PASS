@@ -44,20 +44,19 @@
 	/*************************/
 	$html .= '<table>';
 	$html .= '<thead>';
-	$html .= '<tr><th colspan="6" class="tbl-heading"><img src="img/template/icons/note.png"> <span>Notes <a href="index.php?c=company&task=addopp&Company_ID='.$row->Company_ID.'&redir='.$redir.'" class="btn success icon"><img src="img/template/icons/small/add.png"> <span>New</span></a></span></th></tr>';
+	$html .= '<tr><th colspan="6" class="tbl-heading"><img src="img/template/icons/note.png"> <span>Notes <a href="index.php?c=company&task=addnote&Company_ID='.$row->Company_ID.'&redir='.$redir.'" class="btn success icon"><img src="img/template/icons/small/add.png"> <span>New</span></a></span></th></tr>';
 	$html .= '</thead>';
 	$html .= '<tbody id="notes">';
-	$note_object = $model->get_notes($row->Company_ID);
+	$note_object = $model->get_notes(NULL,NULL,$row->Company_ID,NULL);
 	if ($note_object->numrows>0) {
-		$html .= '<tr><th>Name</th><th class="a-l">Stage</th><th class="a-r">Amount</th><th class="a-l">Close Date</th><th>&nbsp;</th></tr>';
+		$html .= '<tr><th>Subject</th><th class="a-l">Status</th><th class="a-l">Due Date</th><th>&nbsp;</th></tr>';
 		$i=1;
 		while($note = mysql_fetch_object($note_object->result)){
 			$html .= '<tr id="nb'.$i.'">
-						<td class="a-l"><b>'.$note->Note_Name.'</b></td>
-						<td class="a-l">'.$note->Note_StageName.'</td>
-						<td class="a-r">$'.number_format($note->Note_Amount).'</td>
-						<td class="a-l">'.date('d/m/Y',strtotime($note->Note_CloseDate)).'</td>
-						<td class="a-r"><a href="index.php?c=company&task=editopp&Company_ID='.$row->Company_ID.'&id='.$note->Note_ID.'&redir='.urlencode('index.php?c=company&task=view&id='.$row->Company_ID).'" class="btn">Edit</a></td>
+						<td class="a-l"><b>'.$note->Note_Subject.'</b></td>
+						<td class="a-l">'.$note->Note_StatusName.'</td>
+						<td class="a-l">'.date('d/m/Y',strtotime($note->Note_DueDate)).'</td>
+						<td class="a-r"><a href="index.php?c=company&task=editnote&Company_ID='.$row->Company_ID.'&id='.$note->Note_ID.'&redir='.urlencode('index.php?c=company&task=view&id='.$row->Company_ID).'" class="btn">Edit</a></td>
 						</tr>';
 			$i++;
 		}

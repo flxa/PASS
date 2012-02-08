@@ -111,6 +111,75 @@ class CompanyController {
 					$data->errors = $errors;
 				}
 				break;
+			case 'doaddnote':
+				$data->Note_CompanyID		 = $_POST['Note_CompanyID'];
+				$data->Note_RepID			 = $_POST['Note_RepID'];
+				if ($_POST['Note_Subject']!='') {
+					$data->Note_Subject = mysql_real_escape_string($_POST['Note_Subject']);
+				} else {
+					$errors['Note_Subject'] = 'Please add a Subject for this Note!';
+				}
+				$data->Note_Body             = mysql_real_escape_string($_POST['Note_Body']);
+				$data->Note_TypeID			 = $_POST['Note_TypeID'];
+				$data->Note_AddedBy			 = $_POST['Note_AddedBy'];
+				$data->Note_AssignedRepID	 = $_POST['Note_AssignedRepID'];
+				$data->Note_NextActionID	 = $_POST['Note_NextActionID'];
+				$data->Note_DueDate	 		 = mysql_real_escape_string($_POST['Note_DueDate']).' '.mysql_real_escape_string($_POST['Note_DueDateTime']);
+				$data->Note_ReminderDate	 = mysql_real_escape_string($_POST['Note_ReminderDate']).' '.mysql_real_escape_string($_POST['Note_ReminderDateTime']);
+				$data->Note_StatusID		 = $_POST['Note_StatusID'];
+				$data->Note_Recursive		 = $_POST['Note_Recursive'];
+				$data->Note_RecursiveInterval	= $_POST['Note_RecursiveInterval'];
+				$data->Note_RecursiveDateTime	= $_POST['Note_RecursiveDateTime'];
+				if (!isset($_POST['Note_Active'])) {
+					$data->Note_Active        = 1;
+				} else {
+					$data->Note_Active        = $_POST['Note_Active'];
+				}
+				if (!$errors) {
+					//echo '<pre>'; echo print_r($data); exit;
+					$data = $model->save_note($data);
+					if ($_POST['redir']!='') {
+						header("Location: ".urldecode($_POST['redir']));
+					}
+				} else {
+					$data->errors = $errors;
+				}
+				break;
+			case 'doeditnote':
+				$data->Note_ID 				 = mysql_real_escape_string($_POST['Note_ID']);
+				$data->Note_CompanyID		 = $_POST['Note_CompanyID'];
+				$data->Note_RepID			 = $_POST['Note_RepID'];
+				if ($_POST['Note_Subject']!='') {
+					$data->Note_Subject 	 = mysql_real_escape_string($_POST['Note_Subject']);
+				} else {
+					$errors['Note_Subject']  = 'Please add a Subject for this Note!';
+				}
+				$data->Note_Body             = mysql_real_escape_string($_POST['Note_Body']);
+				$data->Note_TypeID			 = $_POST['Note_TypeID'];
+				$data->Note_AddedBy			 = $_POST['Note_AddedBy'];
+				$data->Note_AssignedRepID	 = $_POST['Note_AssignedRepID'];
+				$data->Note_NextActionID	 = $_POST['Note_NextActionID'];
+				$data->Note_DueDate	 		 = mysql_real_escape_string($_POST['Note_DueDate']).' '.mysql_real_escape_string($_POST['Note_DueDateTime']);
+				$data->Note_ReminderDate	 = mysql_real_escape_string($_POST['Note_ReminderDate']).' '.mysql_real_escape_string($_POST['Note_ReminderDateTime']);
+				$data->Note_StatusID		 = $_POST['Note_StatusID'];
+				$data->Note_Recursive		 = $_POST['Note_Recursive'];
+				$data->Note_RecursiveInterval	= $_POST['Note_RecursiveInterval'];
+				$data->Note_RecursiveDateTime	= $_POST['Note_RecursiveDateTime'];
+				if (!isset($_POST['Note_Active'])) {
+					$data->Note_Active        = 1;
+				} else {
+					$data->Note_Active        = $_POST['Note_Active'];
+				}
+				if (!$errors) {
+					//echo '<pre>'; echo print_r($data); exit;
+					$data = $model->edit_note($data);
+					if ($_POST['redir']!='') {
+						header("Location: ".urldecode($_POST['redir']));
+					}
+				} else {
+					$data->errors = $errors;
+				}
+				break;
 			case 'display':
 			default:
 				break;
